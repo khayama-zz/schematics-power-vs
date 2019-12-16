@@ -37,7 +37,6 @@ resource "ibm_pi_network" "pi_network" {
   pi_network_dns       = "9.9.9.9"
   pi_network_cidr      = "192.168.100.0/24"
   pi_network_type      = "vlan"
-  pi_network_gateway   = "192.168.100.1"
   pi_cloud_instance_id = "${data.ibm_resource_instance.resource_instance.id}"
 }
 
