@@ -26,7 +26,7 @@ resource "ibm_resource_instance" "resource_instance" {
 resource "ibm_pi_volume" "pi_volume"{
   pi_volume_size       = 10
   pi_volume_name       = "khayama-volume"
-  pi_volume_type       = standard
+  pi_volume_type       = "standard"
   pi_volume_shareable  = true
   pi_cloud_instance_id = "${data.ibm_resource_instance.resource_instance.id}"
 }
