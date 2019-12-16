@@ -34,8 +34,8 @@ resource "ibm_pi_volume" "pi_volume"{
 resource "ibm_pi_network" "pi_network" {
   count                = 1
   pi_network_name      = "khayama-network"
-  pi_network_dns       = ["9.9.9.9"]
-  pi_network_cidr      = "192.168.100.0/24"
+  pi_dns               = ["9.9.9.9"]
+  pi_cidr              = "192.168.100.0/24"
   pi_network_type      = "vlan"
   pi_cloud_instance_id = "${ibm_resource_instance.resource_instance.id}"
 }
