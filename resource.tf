@@ -23,8 +23,26 @@ resource "ibm_resource_instance" "resource_instance" {
   tags              = ["user:khayama"]
 }
 
-resource "ibm_pi_instance" "test-instance" {
-    pi_instance_name      = "test-vm"
+resource "ibm_pi_volume" "pi_volume"{
+  pi_volume_size       = 10
+  pi_volume_name       = khayama-volume
+  pi_volume_type       = standard
+  pi_volume_shareable  = true
+  pi_cloud_instance_id = "${data.ibm_resource_instance.resource_instance.id}"
+}
+
+resource "ibm_pi_network" "pi_network" {
+  count                = 1
+  pi_network_name      = "khayama-network"
+  pi_network_dns       = "9.9.9.9"
+  pi_network_cidr      = "192.168.100.0/24"
+  pi_network_type      = "vlan"
+  pi_network_gateway   = "192.168.100.1"
+  pi_cloud_instance_id = "${data.ibm_resource_instance.resource_instance.id}"
+}
+
+resource "ibm_pi_instance" "pi_instance" {
+    pi_instance_name      = "khayama-test"
     pi_replicants         = "1"
     pi_key_pair_name      = "khayama-key"
     pi_proc_type          = "shared"
@@ -32,8 +50,8 @@ resource "ibm_pi_instance" "test-instance" {
     pi_processors         = "0.25"
     pi_memory             = "2"
     pi_image_id           = "${var.image}>"
-    pi_volume_ids         = []
-    pi_network_ids        = ["<id of the VM's network IDs>"]
+    pi_volume_ids         = ["${data.ibm_pi_volume.pi_volume.id}"]
+    pi_network_ids        = ["${data.ibm_pi_network.pi_network.networkid}"]
     pi_migratable         = "true"
     pi_replication_policy = "none"
     pi_cloud_instance_id  = "${data.ibm_resource_instance.resource_instance.id}"
