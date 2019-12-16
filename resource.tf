@@ -50,7 +50,7 @@ resource "ibm_pi_instance" "pi_instance" {
     pi_memory             = "2"
     pi_image_id           = "${var.image}>"
     pi_volume_ids         = ["${ibm_pi_volume.pi_volume.id}"]
-    pi_network_ids        = ["${ibm_pi_network.pi_network.networkid}"]
+    pi_network_ids        = ["${ibm_pi_network.pi_network.id}"]
     pi_migratable         = "true"
     pi_replication_policy = "none"
     pi_cloud_instance_id  = "${ibm_resource_instance.resource_instance.id}"
