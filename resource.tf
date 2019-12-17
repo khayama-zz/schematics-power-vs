@@ -11,7 +11,7 @@ variable "image" {
 }
 
 data "ibm_resource_group" "group" {
-  name = "Default"
+  name = "khayama-rg"
 }
 
 resource "ibm_resource_instance" "resource_instance" {
