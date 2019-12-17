@@ -25,10 +25,12 @@ resource "ibm_resource_instance" "resource_instance" {
 
 data "ibm_pi_volume" "pi_volume" {
   pi_volume_name       = "khayama-volume"
+  pi_cloud_instance_id = "${ibm_resource_instance.resource_instance.id}"
 }
 
 data "ibm_pi_network" "pi_network" {
   pi_volume_name       = "khayama-network"
+  pi_cloud_instance_id = "${ibm_resource_instance.resource_instance.id}"
 }
 
 resource "ibm_pi_instance" "pi_instance" {
