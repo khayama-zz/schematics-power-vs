@@ -29,7 +29,7 @@ data "ibm_pi_volume" "pi_volume" {
 }
 
 data "ibm_pi_network" "pi_network" {
-  pi_volume_name       = "khayama-network"
+  pi_network_name       = "khayama-network"
   pi_cloud_instance_id = "${ibm_resource_instance.resource_instance.id}"
 }
 
