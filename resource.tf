@@ -11,7 +11,7 @@ variable "image" {
 }
 
 data "ibm_resource_group" "group" {
-  name = "Default"
+  name = "khayama-rg"
 }
 
 resource "ibm_resource_instance" "resource_instance" {
@@ -23,28 +23,34 @@ resource "ibm_resource_instance" "resource_instance" {
   tags              = ["user:khayama"]
 }
 
-data "ibm_pi_volume" "pi_volume" {
-  pi_volume_name       = "khayama-volume"
+resource "ibm_pi_network" "pi_network" {
+  pi_network_name      = "khayama-network"
+  pi_dns               = ["9.9.9.9"]
+  pi_cidr              = "192.168.100.0/24"
+  pi_network_type      = "vlan"
   pi_cloud_instance_id = "${ibm_resource_instance.resource_instance.id}"
 }
 
-data "ibm_pi_network" "pi_network" {
-  pi_network_name       = "khayama-network"
-  pi_cloud_instance_id = "${ibm_resource_instance.resource_instance.id}"
-}
+#resource "ibm_pi_volume" "pi_volume"{
+#  pi_volume_size       = 10
+#  pi_volume_name       = "khayama-volume"
+#  pi_volume_type       = "standard"
+#  pi_volume_shareable  = true
+#  pi_cloud_instance_id = "${ibm_resource_instance.resource_instance.id}"
+#}
 
-resource "ibm_pi_instance" "pi_instance" {
-    pi_instance_name      = "khayama-test"
-    pi_replicants         = "1"
-    pi_key_pair_name      = "khayama-key"
-    pi_proc_type          = "shared"
-    pi_sys_type           = "s922"  
-    pi_processors         = "0.25"
-    pi_memory             = "2"
-    pi_image_id           = "${var.image}>"
-    pi_volume_ids         = ["${data.ibm_pi_volume.pi_volume.id}"]
-    pi_network_ids        = ["${data.ibm_pi_network.pi_network.id}"]
-    pi_migratable         = "true"
-    pi_replication_policy = "none"
-    pi_cloud_instance_id  = "${ibm_resource_instance.resource_instance.id}"
-  }
+#resource "ibm_pi_instance" "pi_instance" {
+#    pi_instance_name      = "khayama-test"
+#    pi_replicants         = "1"
+#    pi_key_pair_name      = "khayama-key"
+#    pi_proc_type          = "shared"
+#    pi_sys_type           = "s922"  
+#    pi_processors         = "0.25"
+#    pi_memory             = "2"
+#    pi_image_id           = "${var.image}>"
+#    pi_volume_ids         = ["${data.ibm_pi_volume.pi_volume.id}"]
+#    pi_network_ids        = ["${data.ibm_pi_network.pi_network.id}"]
+#    pi_migratable         = "true"
+#    pi_replication_policy = "none"
+#    pi_cloud_instance_id  = "${ibm_resource_instance.resource_instance.id}"
+#  }
